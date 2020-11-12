@@ -1,0 +1,19 @@
+{
+  "persons": [
+    {
+      "name": "Jari",
+      "number": "040 345667",
+      "id": 1
+    },
+    {
+      "name": "Ossi",
+      "number": "040 344567888",
+      "id": 2
+    },
+    {
+      "name": "Taneli",
+      "number": "050 3453457777",
+      "id": 3
+    }
+  ]
+}
