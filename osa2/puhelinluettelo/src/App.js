@@ -24,43 +24,49 @@ const App = () => {
 
   const addName = (event) => {
     event.preventDefault()
-    const personObject = {
-      name: newName,
-      number: newNumber
+    if (persons.find(person => person.name === newName)) {
+      window.alert(`${newName} is already added to phonebook`)
     }
-  
-    personService
-      .create(personObject)
-      .then(response => {
-        setPersons(persons.concat(response.data))
-        setSuccessMessage(
-          `Added ${personObject.name} `
-        )
-        setTimeout(() => {
-          setSuccessMessage(null)
-        }, 5000)
-      })
 
-      .catch (error => {
-        setErrorMessage(
-          `Adding of ${personObject.name} failed`
-        )
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 5000)
-     })
+    else {
+      const personObject = {
+        name: newName,
+        number: newNumber
+      }
+
+      personService
+        .create(personObject)
+        .then(response => {
+          setPersons(persons.concat(response.data))
+          setSuccessMessage(
+            `Added ${personObject.name} `
+          )
+          setTimeout(() => {
+            setSuccessMessage(null)
+          }, 5000)
+        })
+
+        .catch (error => {
+          setErrorMessage(
+            `Adding of ${personObject.name} failed`
+          )
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+        })
+    }
   }
 
   const removeName = (value) => {  
     let id = value.target.id
 
-    let hlo = persons.find(person => Number(person.id) === Number(id))
+    let hlo = persons.find(person => String(person.id) === String(id))
     if (window.confirm("Delete " + hlo.name)) { 
       personService
         .remove(id)
         .then (response => {
           console.log(response)
-          setPersons(persons.filter(person => Number(person.id) !== Number(id)),
+          setPersons(persons.filter(person => String(person.id) !== String(id)),
           setSuccessMessage(
             ` ${hlo.name} deleted `
           ),
